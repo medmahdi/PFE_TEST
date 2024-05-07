@@ -115,7 +115,18 @@
 </plugin>
 		</plugins>
 	</build>
-
+<distributionManagement>
+        <repository>
+            <id>deploymentRepo</id>
+            <name>Nexus Repository</name>
+            <url>http://15.188.73.105:8081/repository/maven-releases/</url>
+        </repository>
+	<snapshotRepository>
+            <id>maven-snapshots</id>
+            <name>Nexus Repository</name>
+            <url>http://15.188.73.105:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 	
 
 </project>
