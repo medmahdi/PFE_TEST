@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment # Kubernetes resource kind we are creating
 metadata:
-  name: pfe-test-deployment
+  name: testapp
 spec:
   selector:
     matchLabels:
@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: pfe-test
+        app: testapp
     spec:
       containers:
         - name: boardgame
