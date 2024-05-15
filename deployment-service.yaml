@@ -5,15 +5,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: boardgame
+      app: pfetest
   replicas: 2 # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
-        app: testapp
+        app: pfetest
     spec:
       containers:
-        - name: boardgame
+        - name: pfetest
           image: mahdiesp/pfe_test:latest # Image that will be used to containers in the cluster
           imagePullPolicy: Always
           ports:
@@ -25,10 +25,10 @@ spec:
 apiVersion: v1 # Kubernetes API version
 kind: Service # Kubernetes resource kind we are creating
 metadata: # Metadata of the resource kind we are creating
-  name: pfe-test-ssvc
+  name: pfetest-ssvc
 spec:
   selector:
-    app: pfe_test
+    app: pfetest
   ports:
     - protocol: "TCP"
       port: 8080 # The port that the service is running on in the cluster
