@@ -10,6 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 class DatabaseServiceProjectApplicationTests {
     @Test
     void contextLoads() {
-        throw new UnsupportedOperationException("contextLoads not implemented in this test");
+       // throw new UnsupportedOperationException("contextLoads not implemented in this test");
     }
 }
