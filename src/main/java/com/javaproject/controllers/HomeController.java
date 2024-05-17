@@ -85,7 +85,7 @@ public class HomeController {
 
     @GetMapping("/{id}")
     public String getBoardgameDetail(@PathVariable Long id, Model model) {
-        model.addAttribute("BOARDGAME_VIEW", da.getBoardGame(id));
+        model.addAttribute(BOARDGAME_VIEW, da.getBoardGame(id));
         return BOARDGAME_VIEW;
     }
 
@@ -109,13 +109,13 @@ public class HomeController {
     public String editReview(@PathVariable Long gameId, @PathVariable Long id, Model model) {
         Review review = da.getReview(id);
         model.addAttribute(REVIEW_VIEW , review);
-        model.addAttribute("BOARDGAME_VIEW", da.getBoardGame(gameId));
+        model.addAttribute(BOARDGAME_VIEW, da.getBoardGame(gameId));
         return "secured/addReview";
     }
 
     @GetMapping("/secured/addBoardGame")
     public String addBoardGame(Model model) {
-        model.addAttribute("BOARDGAME_VIEW", new BoardGame());
+        model.addAttribute(BOARDGAME_VIEW, new BoardGame());
         return "secured/addBoardGame";
     }
 
