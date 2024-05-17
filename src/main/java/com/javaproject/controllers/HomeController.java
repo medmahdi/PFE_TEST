@@ -26,6 +26,7 @@ import com.javaproject.database.DatabaseAccess;
 @Controller
 public class HomeController {
 
+    private static final String REDIRECT_PATH = "redirect:/";
     @Autowired
     DatabaseAccess da;
 
@@ -65,7 +66,7 @@ public class HomeController {
 
             jdbcUserDetailsManager.createUser(user);
             redirectAttrs.addFlashAttribute("userAddedMsg", "User succesfully added!");
-            return "redirect:/";
+            return REDIRECT_PATH;
         }
     }
 
@@ -116,7 +117,7 @@ public class HomeController {
     public String boardgameAdded(@ModelAttribute BoardGame boardgame) {
         Long returnValue = da.addBoardGame(boardgame);
         System.out.println("return value is: " + returnValue);
-        return "redirect:/";
+        return REDIRECT_PATH;
     }
 
     @PostMapping("/reviewAdded")
@@ -130,7 +131,7 @@ public class HomeController {
             returnValue = da.addReview(review);
         }
         System.out.println("return value is: " + returnValue);
-        return "redirect:/" + review.getGameId() +
+        return REDIRECT_PATH + review.getGameId() +
                 "/reviews";
     }
 
@@ -139,7 +140,7 @@ public class HomeController {
         Long gameId = da.getReview(id).getGameId();
         int returnValue = da.deleteReview(id);
         System.out.println("return value is: " + returnValue);
-        return "redirect:/" + gameId + "/reviews";
+        return REDIRECT_PATH + gameId + "/reviews";
     }
 
     @GetMapping("/user")
