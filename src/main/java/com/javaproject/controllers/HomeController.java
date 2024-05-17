@@ -26,13 +26,6 @@ import com.javaproject.database.DatabaseAccess;
 @Controller
 public class HomeController {
 
-    private static final String REDIRECT_PATH = "redirect:/";
-    private static final String BOARDGAME_VIEW = "boardgame";
-    private static final String REVIEW_VIEW = "review";
-    private static final String RETURN_VALUE_MESSAGE = "Return value is:";
-    
-
-
     @Autowired
     DatabaseAccess da;
 
@@ -72,7 +65,7 @@ public class HomeController {
 
             jdbcUserDetailsManager.createUser(user);
             redirectAttrs.addFlashAttribute("userAddedMsg", "User succesfully added!");
-            return REDIRECT_PATH;
+            return "redirect:/";
         }
     }
 
@@ -85,21 +78,21 @@ public class HomeController {
 
     @GetMapping("/{id}")
     public String getBoardgameDetail(@PathVariable Long id, Model model) {
-        model.addAttribute(BOARDGAME_VIEW, da.getBoardGame(id));
-        return BOARDGAME_VIEW;
+        model.addAttribute("boardgame", da.getBoardGame(id));
+        return "boardgame";
     }
 
     @GetMapping("/{id}/reviews")
     public String getReviews(@PathVariable Long id, Model model) {
-        model.addAttribute(BOARDGAME_VIEW, da.getBoardGame(id));
+        model.addAttribute("boardgame", da.getBoardGame(id));
         model.addAttribute("reviews", da.getReviews(id));
-        return REVIEW_VIEW ;
+        return "review";
     }
 
     @GetMapping("/secured/addReview/{id}")
     public String addReview(@PathVariable Long id, Model model) {
-        model.addAttribute(BOARDGAME_VIEW, da.getBoardGame(id));
-        model.addAttribute(REVIEW_VIEW , new Review());
+        model.addAttribute("boardgame", da.getBoardGame(id));
+        model.addAttribute("review", new Review());
 
         return "secured/addReview";
     }
@@ -108,22 +101,22 @@ public class HomeController {
     @GetMapping("/{gameId}/reviews/{id}")
     public String editReview(@PathVariable Long gameId, @PathVariable Long id, Model model) {
         Review review = da.getReview(id);
-        model.addAttribute(REVIEW_VIEW , review);
-        model.addAttribute(BOARDGAME_VIEW, da.getBoardGame(gameId));
+        model.addAttribute("review", review);
+        model.addAttribute("boardgame", da.getBoardGame(gameId));
         return "secured/addReview";
     }
 
     @GetMapping("/secured/addBoardGame")
     public String addBoardGame(Model model) {
-        model.addAttribute(BOARDGAME_VIEW, new BoardGame());
+        model.addAttribute("boardgame", new BoardGame());
         return "secured/addBoardGame";
     }
 
     @PostMapping("/boardgameAdded")
     public String boardgameAdded(@ModelAttribute BoardGame boardgame) {
         Long returnValue = da.addBoardGame(boardgame);
-        System.out.println(RETURN_VALUE_MESSAGE + returnValue);
-        return REDIRECT_PATH;
+        System.out.println("return value is: " + returnValue);
+        return "redirect:/";
     }
 
     @PostMapping("/reviewAdded")
@@ -136,8 +129,8 @@ public class HomeController {
             // if id not exists, add
             returnValue = da.addReview(review);
         }
-        System.out.println(RETURN_VALUE_MESSAGE + returnValue);
-        return REDIRECT_PATH + review.getGameId() +
+        System.out.println("return value is: " + returnValue);
+        return "redirect:/" + review.getGameId() +
                 "/reviews";
     }
 
@@ -145,8 +138,8 @@ public class HomeController {
     public String deleteReview(@PathVariable Long id) {
         Long gameId = da.getReview(id).getGameId();
         int returnValue = da.deleteReview(id);
-        System.out.println(RETURN_VALUE_MESSAGE + returnValue);
-        return REDIRECT_PATH + gameId + "/reviews";
+        System.out.println("return value is: " + returnValue);
+        return "redirect:/" + gameId + "/reviews";
     }
 
     @GetMapping("/user")
