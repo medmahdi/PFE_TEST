@@ -15,6 +15,7 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+     private static final String AUTHORITY_MANAGER = "MANAGER";
 
     private LoggingAccessDeniedHandler accessDeniedHandler;
 
@@ -55,9 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/user/**").hasAnyRole("USER", "MANAGER") // sets up authorization
-                .antMatchers("/secured/**").hasAnyRole("USER", "MANAGER")
-                .antMatchers("/manager/**").hasRole("MANAGER")
+                .antMatchers("/user/**").hasAnyRole("USER", AUTHORITY_MANAGER) // sets up authorization
+                .antMatchers("/secured/**").hasAnyRole("USER", AUTHORITY_MANAGER)
+                .antMatchers("/manager/**").hasRole(AUTHORITY_MANAGER)
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/", "/**").permitAll() // allows access to index in templates
                 .and() // allows us to chain
